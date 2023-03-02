@@ -41,6 +41,7 @@ import static org.apache.cassandra.config.YamlConfigurationLoader.SYSTEM_PROPERT
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 
@@ -167,6 +168,19 @@ public class YamlConfigurationLoaderTest
 
         assertThat(c.row_index_read_size_warn_threshold).isEqualTo(new DataStorageSpec.LongBytesBound(1 << 12, KIBIBYTES));
         assertThat(c.row_index_read_size_fail_threshold).isEqualTo(new DataStorageSpec.LongBytesBound(1 << 13, KIBIBYTES));
+    }
+
+    @Test
+    public void readSSTableCompressionFromConfig()
+    {
+        Config c = load("test/conf/cassandra.yaml");
+
+        assertNotNull(c.sstable_compressor);
+        assertThat(c.sstable_compressor.type).isNull();
+        assertThat(c.sstable_compressor.chunk_length).isEqualTo("");
+        assertThat(c.sstable_compressor.min_compress_ratio).isNull();
+        assertThat(c.sstable_compressor.compressor).isNull();
+        assertThat(c.sstable_compressor.enabled).isFalse();
     }
 
     @Test

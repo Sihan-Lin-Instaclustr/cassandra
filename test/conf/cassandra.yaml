@@ -111,3 +111,13 @@ memtable:
             class_name: TrieMemtable
 # Note: keep the memtable configuration at the end of the file, so that the default mapping can be changed without
 # duplicating the whole section above.
+
+sstable_compressor:
+    #chunk_length: 16MiB
+    #min_compress_ratio: 0.0
+    enabled : true
+    #type: custom
+    # if custom type is specified compressor class and parameters must be provided
+    #compressor:
+    #    class_name: org.apache.cassandra.io.compress.LZ4Compressor # the compressor class
+    #    parameters:

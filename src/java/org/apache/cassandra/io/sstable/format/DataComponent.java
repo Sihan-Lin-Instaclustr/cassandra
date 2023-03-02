@@ -19,6 +19,7 @@
 package org.apache.cassandra.io.sstable.format;
 
 import org.apache.cassandra.config.Config.FlushCompression;
+import org.apache.cassandra.config.DatabaseDescriptor;
 import org.apache.cassandra.db.compaction.OperationType;
 import org.apache.cassandra.io.compress.CompressedSequentialWriter;
 import org.apache.cassandra.io.compress.ICompressor;
@@ -89,7 +90,7 @@ public class DataComponent
                     if (!compressor.recommendedUses().contains(ICompressor.Uses.FAST_COMPRESSION))
                     {
                         // The default compressor is generally fast (LZ4 with 16KiB block size)
-                        compressionParams = CompressionParams.DEFAULT;
+                        compressionParams = DatabaseDescriptor.getSSTableCompression();
                         break;
                     }
                     // else fall through

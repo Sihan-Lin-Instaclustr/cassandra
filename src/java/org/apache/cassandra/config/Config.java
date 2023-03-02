@@ -1083,6 +1083,9 @@ public class Config
     public volatile long min_tracked_partition_tombstone_count = 5000;
     public volatile boolean top_partitions_enabled = true;
 
+    @Nullable
+    public SSTableCompressionOptions sstable_compressor;
+
     public static Supplier<Config> getOverrideLoadConfig()
     {
         return overrideLoadConfig;
@@ -1170,6 +1173,17 @@ public class Config
         disabled,
         warn,
         exception
+    }
+
+    public enum CompressorType
+    {
+        lz4,
+        none,
+        noop,
+        snappy,
+        deflate,
+        zstd,
+        custom,
     }
 
     private static final Set<String> SENSITIVE_KEYS = new HashSet<String>() {{
